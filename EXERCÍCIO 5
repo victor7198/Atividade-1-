@@ -1,0 +1,23 @@
+package ex5;
+
+public class Exercicio5 {
+    public static void main(String[] args) {
+        // Exercício 5: Avaliação de Notas dos Alunos
+
+        double[] notas = {7.5, 9.0, 6.0, 8.5, 10.0, 5.5, 7.0, 9.5, 4.0, 8.0};
+
+        System.out.println("=== Notas da Turma ===");
+        for (int i = 0; i < notas.length; i++) {
+            System.out.printf("Aluno %2d: %.1f%n", i + 1, notas[i]);
+        }
+
+        double maiorNota = notas[0];
+        for (double nota : notas) {
+            if (nota > maiorNota) {
+                maiorNota = nota;
+            }
+        }
+
+        System.out.printf("%nMaior nota da turma: %.1f%n", maiorNota);
+    }
+}
