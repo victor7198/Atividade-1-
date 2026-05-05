@@ -1,0 +1,31 @@
+package ex2;
+
+import java.util.Scanner;
+
+public class Exercicio2 {
+    public static void main(String[] args) {
+        // Exercício 2: Verificador de Características de Um Produto
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o código do produto: ");
+        int codigoProduto = scanner.nextInt();
+
+        if (codigoProduto % 2 == 0) {
+            System.out.println("O código " + codigoProduto + " é PAR.");
+        } else {
+            System.out.println("O código " + codigoProduto + " é ÍMPAR.");
+        }
+
+        scanner.close();
+    }
+}
+
+
+                case 0:
+                    System.out.println("Encerrando sistema.");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.\n");
+            }
