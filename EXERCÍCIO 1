@@ -1,0 +1,25 @@
+EXERCICIO 1 
+
+package ex1;
+
+public class Exercicio1 {
+    public static void main(String[] args) {
+        // Exercício 1: Explorando Variáveis no Sistema de Reservas de um Hotel
+
+        int numeroQuarto = 305;
+        double valorDiaria = 289.90;
+        String nomeHospede = "Maria Silva";
+
+        System.out.println("=== Sistema de Reservas do Hotel ===");
+        System.out.println("Número do Quarto : " + numeroQuarto);
+        System.out.printf("Valor da Diária  : R$ %.2f%n", valorDiaria);
+        System.out.println("Nome do Hóspede  : " + nomeHospede);
+    }
+}
+
+
+        } while (opcao != 0);
+
+        scanner.close();
+    }
+}
