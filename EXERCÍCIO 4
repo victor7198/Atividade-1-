@@ -1,0 +1,76 @@
+package ex4;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Exercicio4 {
+
+    static List<String> listaEspera = new ArrayList<>();
+
+    public static void exibirLista() {
+        if (listaEspera.isEmpty()) {
+            System.out.println("A lista de espera está vazia.");
+        } else {
+            System.out.println("Lista de espera atual (" + listaEspera.size() + " cliente(s)):");
+            for (int i = 0; i < listaEspera.size(); i++) {
+                System.out.println("  " + (i + 1) + ". " + listaEspera.get(i));
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        // Exercício 4: Organizando uma Lista de Espera Dinâmica
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do {
+            System.out.println("=== Restaurante - Lista de Espera ===");
+            System.out.println("1 - Adicionar cliente");
+            System.out.println("2 - Remover cliente");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine(); // consumir quebra de linha
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Nome do cliente: ");
+                    String nome = scanner.nextLine();
+                    listaEspera.add(nome);
+                    System.out.println("\"" + nome + "\" adicionado(a) à lista.\n");
+                    exibirLista();
+                    break;
+
+                case 2:
+                    if (listaEspera.isEmpty()) {
+                        System.out.println("A lista já está vazia!\n");
+                    } else {
+                        exibirLista();
+                        System.out.print("Número do cliente a remover: ");
+                        int pos = scanner.nextInt() - 1;
+                        if (pos >= 0 && pos < listaEspera.size()) {
+                            String removido = listaEspera.remove(pos);
+                            System.out.println("\"" + removido + "\" removido(a) da lista.\n");
+                            exibirLista();
+                        } else {
+                            System.out.println("Posição inválida.\n");
+                        }
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Encerrando sistema.");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.\n");
+            }
+
+        } while (opcao != 0);
+
+        scanner.close();
+    }
+}
