@@ -1,0 +1,178 @@
+package ex10;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Produto {
+    private static int contadorId = 1;
+
+    private int id;
+    private String nome;
+    private double preco;
+    private int quantidade;
+
+    public Produto(String nome, double preco, int quantidade) {
+        this.id = contadorId++;
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    public int getId() { return id; }
+    public String getNome() { return nome; }
+    public double getPreco() { return preco; }
+    public int getQuantidade() { return quantidade; }
+
+    public void setNome(String nome) { this.nome = nome; }
+    public void setPreco(double preco) { this.preco = preco; }
+    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+
+    @Override
+    public String toString() {
+        return String.format("[ID: %3d] %-25s | Preço: R$ %8.2f | Estoque: %4d un.",
+                id, nome, preco, quantidade);
+    }
+}
+
+public class Exercicio10 {
+
+    static List<Produto> estoque = new ArrayList<>();
+
+    public static Produto buscarPorId(int id) {
+        for (Produto p : estoque) {
+            if (p.getId() == id) return p;
+        }
+        return null;
+    }
+
+    public static void listarEstoque() {
+        if (estoque.isEmpty()) {
+            System.out.println("Estoque vazio.\n");
+            return;
+        }
+        System.out.println("\n=== Estoque Atual (" + estoque.size() + " produto(s)) ===");
+        double totalValor = 0;
+        for (Produto p : estoque) {
+            System.out.println(p);
+            totalValor += p.getPreco() * p.getQuantidade();
+        }
+        System.out.printf("Valor total em estoque: R$ %.2f%n%n", totalValor);
+    }
+
+    public static void main(String[] args) {
+        // Exercício 10: Sistema de Gerenciamento de Estoque
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do {
+            System.out.println("========================================");
+            System.out.println("  SISTEMA DE GERENCIAMENTO DE ESTOQUE  ");
+            System.out.println("========================================");
+            System.out.println("1 - Adicionar produto");
+            System.out.println("2 - Listar produtos");
+            System.out.println("3 - Atualizar produto");
+            System.out.println("4 - Remover produto");
+            System.out.println("5 - Buscar produto por ID");
+            System.out.println("0 - Sair");
+            System.out.print("Opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+
+                case 1: // Adicionar
+                    System.out.print("Nome do produto: ");
+                    String nome = scanner.nextLine();
+                    System.out.print("Preço (R$): ");
+                    double preco = scanner.nextDouble();
+                    System.out.print("Quantidade em estoque: ");
+                    int qtd = scanner.nextInt();
+                    scanner.nextLine();
+                    Produto novo = new Produto(nome, preco, qtd);
+                    estoque.add(novo);
+                    System.out.println("Produto adicionado! " + novo + "\n");
+                    break;
+
+                case 2: // Listar
+                    listarEstoque();
+                    break;
+
+                case 3: // Atualizar
+                    listarEstoque();
+                    if (!estoque.isEmpty()) {
+                        System.out.print("ID do produto a atualizar: ");
+                        int idAtualizar = scanner.nextInt();
+                        scanner.nextLine();
+                        Produto prodAtualizar = buscarPorId(idAtualizar);
+                        if (prodAtualizar != null) {
+                            System.out.println("Produto atual: " + prodAtualizar);
+                            System.out.println("O que deseja atualizar?");
+                            System.out.println("1 - Nome  2 - Preço  3 - Quantidade");
+                            int campo = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (campo) {
+                                case 1:
+                                    System.out.print("Novo nome: ");
+                                    prodAtualizar.setNome(scanner.nextLine());
+                                    break;
+                                case 2:
+                                    System.out.print("Novo preço: ");
+                                    prodAtualizar.setPreco(scanner.nextDouble());
+                                    break;
+                                case 3:
+                                    System.out.print("Nova quantidade: ");
+                                    prodAtualizar.setQuantidade(scanner.nextInt());
+                                    break;
+                                default:
+                                    System.out.println("Opção inválida.");
+                            }
+                            System.out.println("Produto atualizado: " + prodAtualizar + "\n");
+                        } else {
+                            System.out.println("Produto não encontrado.\n");
+                        }
+                    }
+                    break;
+
+                case 4: // Remover
+                    listarEstoque();
+                    if (!estoque.isEmpty()) {
+                        System.out.print("ID do produto a remover: ");
+                        int idRemover = scanner.nextInt();
+                        scanner.nextLine();
+                        Produto prodRemover = buscarPorId(idRemover);
+                        if (prodRemover != null) {
+                            estoque.remove(prodRemover);
+                            System.out.println("Produto \"" + prodRemover.getNome() + "\" removido do estoque.\n");
+                        } else {
+                            System.out.println("Produto não encontrado.\n");
+                        }
+                    }
+                    break;
+
+                case 5: // Buscar por ID
+                    System.out.print("Digite o ID do produto: ");
+                    int idBusca = scanner.nextInt();
+                    scanner.nextLine();
+                    Produto encontrado = buscarPorId(idBusca);
+                    if (encontrado != null) {
+                        System.out.println("Produto encontrado: " + encontrado + "\n");
+                    } else {
+                        System.out.println("Nenhum produto com ID " + idBusca + " encontrado.\n");
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Encerrando sistema. Até logo!");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.\n");
+            }
+
+        } while (opcao != 0);
+
+        scanner.close();
+    }
+}
